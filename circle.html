@@ -4,7 +4,11 @@
   <body>
     <h1 class="title">lillipad circle game</h1>
     <div id="game-host" class="host">
-      <div id="me" class="me" style="left: 0; top: 0"></div>
+      <div
+        id="me"
+        class="me"
+        style="left: 0; top: 0; background-color: white"
+      ></div>
     </div>
   </body>
 
@@ -38,16 +42,21 @@
 
     function controlMe() {
       // TODO when i hold direction key, get rid of delay before going
-      if (me) {
-        document.addEventListener("keypress", (event) => {
-          moveMe(event.key);
-        });
-      }
+      document.addEventListener("keypress", (event) => {
+        moveMe(event.key);
+      });
     }
 
     function findMe() {
       me = document.querySelector("#me");
-      console.log("me position: ", me.offsetTop, me.offsetLeft);
+      if (me) {
+        console.log("me position: ", me.offsetTop, me.offsetLeft);
+
+        // Set color of 'me'
+        me.style.backgroundColor = Math.floor(
+          Math.random() * 16777215
+        ).toString(16);
+      }
     }
 
     function findHost() {
@@ -72,7 +81,9 @@
     function main() {
       findHost();
       findMe();
-      controlMe();
+      if (me) {
+        controlMe();
+      }
     }
 
     main();
@@ -91,7 +102,6 @@
 
     .me {
       border-radius: 50%;
-      background-color: green;
       height: 25px;
       width: 25px;
 
