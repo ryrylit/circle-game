@@ -39,7 +39,8 @@
     function controlMe() {
       // TODO when i hold direction key, get rid of delay before going
       if (me) {
-        document.addEventListener("keypress", (event) => {
+        document.addEventListener("keydown", (event) => {
+          console.log(event);
           moveMe(event.key);
         });
       }
