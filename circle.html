@@ -1,29 +1,105 @@
-<!DOCTYPE html>
-<head>
+<html>
+  <head> </head>
 
-</head>
-
-<body>
-    <h1>lillipad circle game</h1>
+  <body>
+    <h1 class="title">lillipad circle game</h1>
     <div id="game-host" class="host">
-
+      <div id="me" class="me" style="left: 0; top: 0"></div>
     </div>
-</body>
+  </body>
 
-<script type="application/javascript">
+  <script type="application/javascript">
+    var me = null;
+    var host = null;
+
+    function moveMe(key) {
+      key.toLowerCase();
+      switch (key) {
+        case "w":
+          // TODO stay in top
+          me.style.top = parseInt(getPosition(me, "top")) - 5 + "px";
+          break;
+        case "a":
+          // TODO stay in left
+          me.style.left = parseInt(getPosition(me, "left")) - 5 + "px";
+          break;
+        case "s":
+          // TODO stay in bottom
+          me.style.top = parseInt(getPosition(me, "top")) + 5 + "px";
+          break;
+        case "d":
+          // TODO stay in right
+          me.style.left = parseInt(getPosition(me, "left")) + 5 + "px";
+          break;
+        default:
+          console.log("Not a directional control: ");
+      }
+    }
+
+    function controlMe() {
+      // TODO when i hold direction key, get rid of delay before going
+      if (me) {
+        document.addEventListener("keypress", (event) => {
+          moveMe(event.key);
+        });
+      }
+    }
+
+    function findMe() {
+      me = document.querySelector("#me");
+      console.log("me position: ", me.offsetTop, me.offsetLeft);
+    }
+
+    function findHost() {
+      host = document.querySelector("#game-host");
+      console.log("host position: ", host.offsetTop, host.offsetLeft);
+    }
+
+    function getPosition(elem, direction) {
+      let pos = 0;
+      // top or left
+      if (direction === "top") {
+        pos = elem.style.top.slice(0, -2);
+        console.log("moving vert: ", pos);
+      } else if (direction === "left") {
+        pos = elem.style.left.slice(0, -2);
+        console.log("moving lat: ", pos);
+      }
+
+      return pos;
+    }
+
     function main() {
-        console.log('hello circle world')
+      findHost();
+      findMe();
+      controlMe();
     }
 
-    main()
-</script>
+    main();
+  </script>
 
-<style>
+  <style>
     .host {
-        margin: auto;
-        width: 1000px;
-        height: 1000px;
-        border: 1px solid green;
+      position: fixed;
+      left: 100;
+      top: 100;
+
+      width: 1000px;
+      height: 1000px;
+      border: 1px solid green;
     }
-</style>
+
+    .me {
+      border-radius: 50%;
+      background-color: green;
+      height: 25px;
+      width: 25px;
+
+      position: absolute;
+    }
+
+    .title {
+      margin-left: 100px;
+    }
+  </style>
 </html>
