@@ -7,6 +7,7 @@
     var lastRender = 0;
     var width;
     var height;
+    var playerSize = 50;
 
     var canvas = document.querySelector("canvas");
     var ctx = canvas.getContext("2d");
@@ -56,35 +57,32 @@
 
     // game loop stuff
     function update(progress) {
+      // TODO clean this up
       if (state.pressedKeys.left) {
-        state.x -= progress;
+        if (state.x > 0) {
+          state.x -= progress;
+        }
       }
       if (state.pressedKeys.right) {
-        state.x += progress;
+        if (state.x <= width - playerSize) {
+          state.x += progress;
+        }
       }
       if (state.pressedKeys.up) {
-        state.y -= progress;
+        if (state.y > 0) {
+          state.y -= progress;
+        }
       }
       if (state.pressedKeys.down) {
-        state.y += progress;
-      }
-
-      // Flip position at boundaries
-      if (state.x > width) {
-        state.x -= width;
-      } else if (state.x < 0) {
-        state.x += width;
-      }
-      if (state.y > height) {
-        state.y -= height;
-      } else if (state.y < 0) {
-        state.y += height;
+        if (state.y <= height - playerSize) {
+          state.y += progress;
+        }
       }
     }
 
     function draw() {
       ctx.clearRect(0, 0, width, height);
-      ctx.fillRect(state.x - 5, state.y - 5, 50, 50);
+      ctx.fillRect(state.x, state.y, playerSize, playerSize);
     }
 
     function loop(timestamp) {
